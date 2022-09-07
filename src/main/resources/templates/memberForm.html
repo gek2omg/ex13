@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form id="frmMember" class="frmMember" name="frmMember" method="POST" action="/api/member">
+    <div><input type="text" name="name"></div>
+    <div><input type="text" name="jumin"></div>
+    <div><input type="text" name="address"></div>
+    <div><button type="submit" id="" name="">등록하기</button></div>
+    <div id="htmlOut"></div>
+</form>
+<script>
+    document.querySelector("#frmMember").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let HTML = "";
+
+        let form = document.getElementById("frmMember");
+        let formData = new FormData(form);
+
+        formData.append("append", "append 추가된 내용입니다.");
+
+        let formObject = Object.fromEntries(formData.entries());
+
+        fetch("/api/member", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formObject)
+        })
+            .then((response)=>response.json())
+            .then(function(json) {
+                if(json.message == "SUCCESS") {
+                    console.log(json);
+                } else {
+                    console.log(json);
+                }
+            });
+    });
+</script>
+</body>
+</html>
